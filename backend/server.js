@@ -8,7 +8,8 @@ const app=express()
 app.use(cors())
 app.use(express.json())
 mongoose.set('strictQuery',true)
-mongoose.connect('mongodb+srv://PRATHAP:VEERA6543@cluster0.98yxf.mongodb.net/userDB?retryWrites=true&w=majority',()=>{console.log('connected')})
+mongoose.connect('mongodb://127.0.0.1:27017/LMV')
+    .then(()=>console.log("db connected"))
 const userSchema=new mongoose.Schema({
     email:'String',
     password:'String',
@@ -49,7 +50,8 @@ app.get('/',(req,res)=>{
 app.post('/register',async(req,res)=>{
     try{
         const {email,password,confirmPassword}=req.body
-        const exist=await User.findOne({emai})
+        console.log(req.body);
+        const exist=await User.findOne({email})
         if(exist){
             return res.send('Email already taken')
         }
@@ -70,6 +72,6 @@ app.post('/register',async(req,res)=>{
     }
     
 })
-app.listen(8081,()=>{
+app.listen(4000,()=>{
     console.log('server running at port 8081');
 })
